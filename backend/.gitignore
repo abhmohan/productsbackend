@@ -3,3 +3,8 @@ html/
 javascript/
 npm/
 react/
+env/
+venv/
+__pycache__/
+*.pyc
+.env
