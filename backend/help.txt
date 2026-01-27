@@ -2,3 +2,156 @@ python -m venv venv
 venv\Scripts\Activate.ps1
 pip install fastapi uvicorn pymongo motor
 uvicorn main:app --reload
+
+
+🚀 What is uv?
+
+uv is a fast Python package manager + virtual environment tool that replaces:
+
+pip
+
+virtualenv
+
+parts of poetry / pipenv
+
+It is built by Astral and is much faster than pip.
+
+1️⃣ Install uv
+On Windows (PowerShell)
+pip install uv
+
+
+or (recommended)
+
+winget install Astral.uv
+
+On macOS/Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+
+Verify:
+
+uv --version
+
+2️⃣ Create a Virtual Environment
+
+Instead of:
+
+python -m venv env
+
+
+Use:
+
+uv venv
+
+
+This creates:
+
+.venv/
+
+
+Activate it:
+
+Windows
+.venv\Scripts\activate
+
+Mac/Linux
+source .venv/bin/activate
+
+3️⃣ Install Packages (replaces pip)
+
+Instead of:
+
+pip install fastapi uvicorn
+
+
+Use:
+
+uv pip install fastapi uvicorn
+
+
+To install from requirements.txt:
+
+uv pip install -r requirements.txt
+
+4️⃣ Freeze Dependencies
+
+Generate requirements.txt:
+
+uv pip freeze > requirements.txt
+
+5️⃣ Create a New Project (Best Way)
+
+Let uv manage your project fully:
+
+uv init myproject
+cd myproject
+uv venv
+uv pip install fastapi uvicorn
+
+
+Folder:
+
+myproject/
+  .venv/
+  pyproject.toml
+
+6️⃣ Run FastAPI with uv + uvicorn
+uv pip install fastapi uvicorn
+uvicorn main:app --reload
+
+
+(uv doesn’t replace uvicorn — it installs it)
+
+7️⃣ Why uv is Better than pip
+Feature	pip	uv
+Speed	Slow	⚡ Very fast
+Resolver	Old	Modern
+Virtualenv	External	Built-in
+Locking	❌	✅
+pyproject.toml	Partial	Full
+8️⃣ Using pyproject.toml with uv
+
+Instead of requirements.txt, modern projects use:
+
+[project]
+dependencies = [
+  "fastapi",
+  "uvicorn"
+]
+
+
+Install all:
+
+uv pip install -e .
+
+9️⃣ Lock File (Reproducible Builds)
+
+Create a lockfile:
+
+uv pip compile pyproject.toml -o requirements.lock
+
+
+Install exactly:
+
+uv pip sync requirements.lock
+
+
+Great for production!
+
+10️⃣ Typical Workflow for Your FastAPI + React Backend
+uv init backend
+cd backend
+uv venv
+uv pip install fastapi uvicorn pymongo python-dotenv
+uvicorn main:app --reload
+
+Common Commands Cheat Sheet
+Task	Command
+Create venv	uv venv
+Activate venv	.venv\Scripts\activate
+Install pkg	uv pip install pkg
+Install all	uv pip install -r requirements.txt
+Freeze	uv pip freeze
+Lock deps	uv pip compile
+Sync	uv pip sync
